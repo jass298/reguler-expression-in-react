@@ -1,0 +1,135 @@
+import React from 'react';
+import './App.css';
+
+export default class MyForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      countries: ["India", "Pakistan", "America"],
+      states: [],
+      selectedState : " ",
+      selectedCountry : " " ,
+      newcountryname : " ",
+    };
+  }
+
+  showCountry = (e) => {
+
+    this.setState({ selectedCountry: e.target.value });
+
+    if (e.target.value == "India")
+      this.setState({ states: ["Haryana", "Punjab", "Uttarakhand"]});
+
+    else if (e.target.value == "Pakistan")
+      this.setState({ states: ["Lahore", "Karachi", "Multan", "Rawalpindi"] });
+
+    else if (e.target.value == "America")
+      this.setState({ states: ["Washington", "New York"] })
+    
+  }
+  
+  selectState = (e) => {
+    this.setState({ selectedState: e.target.value });
+  };
+
+  newcountry = (e) => {
+this.setState({newcountryname : e.target.value})
+  }
+
+  savecountry = (e) => {
+    const { countries, newcountryname } = this.state;
+    if( newcountryname && ! countries.includes(newcountryname))
+    {
+      this.setState({
+        countries: [...countries, newcountryname],
+        newcountryname: "",
+      }, () => {
+    console.log( "updatedarr:" +   this.state.countries  )
+  });
+};
+
+
+  }
+  
+  render() {
+    return (
+      <>
+        <form>
+
+
+          <select onChange={this.showCountry} value={this.state.selectedCountry}>
+          <option value="">Select Country</option>
+          {this.state.countries.map((country) => (
+            <option key={country} value={country}>
+              {country}
+            </option>
+          ))}
+        </select>
+   
+          <select  onChnage={this.selectState} value={this.state.selectedState}>
+
+            <option value ="">Select states</option>
+            {this.state.states.map((item, index) => (
+  <option key={index} value={item}>{item}</option>
+))}
+          </select>
+
+          <br />
+          Selected country = {this.state.selectedCountry}  <br />
+          Selected state ={ this.state.selectedState}
+          
+        </form>
+<br/>
+<h3>Put new countries name below</h3>
+
+<input type="text" value={this.state.newcountryname} onChange={this.newcountry} />
+<button onClick={this.savecountry}>save</button>
+
+      </>
+    )
+  }
+}
+
+
+// //2nd way
+
+// export default class MyForm extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       countries: ["India", "Pakistan", "America"],
+//       states: {
+//         India: ["Haryana", "Punjab", "Uttarakhand"],
+//         Pakistan: ["Lahore", "Karachi"],
+//         America: ["Washington", "New York"]
+//       },
+//        selectedCountry: "India",
+
+//     };
+//   }
+  
+//   showCountry = (e) => {
+  
+//  this.setState({countries :e.target.value})
+
+//   }
+//   render() {
+//     const { countries, states, selectedCountry } = this.state;
+
+//     return (
+//       <>
+//         <select onChange={this.showCountry} value={selectedCountry}>
+//           {countries.map((item, i) => (
+//             <option key={i} value={item}>{item}</option>
+//           ))}
+//         </select>
+
+//         <select>
+//           {states[selectedCountry].map((state, i) => (
+//             <option key={i} value={state}>{state}</option>
+//           ))}
+//         </select>
+//       </>
+//     );
+//   }
+// }
