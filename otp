@@ -1,0 +1,57 @@
+import React from 'react'
+import './App.css';
+
+export default class Otp extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            phone: '',
+            otpmsg: '',
+        };
+    }
+
+
+    handlephone = (e) => {
+        this.setState({ phone: e.target.value });
+    };
+
+
+     handleotp= (e) => {
+        let otp ='';
+        const digit = '0123456789' ;
+        const len = digit.length ;
+        
+        for( let i= 0 ; i<4 ; i++){
+            otp += digit[Math.floor(Math.random() *len)];
+            this.setState({otpmsg:otp})
+        }
+           return otp ;   
+       
+           console.log(otp)    
+};
+
+    
+
+    render() {
+        return (
+            <>
+                <form onSubmit={(e) => e.preventDefault()}>
+
+                    <h2>Genrate otp👇(0000)</h2>
+
+                    Enter Phone number : <input
+                        type='number'
+                        name='phone'
+                        value={this.state.phone}
+                        onChange={this.handlephone}
+                    />
+
+                </form>
+                <br />
+                <button onClick={this.handleotp}>get otp</button>
+                <p>{this.state.otpmsg}</p>
+            </>
+
+        )
+    };
+};
