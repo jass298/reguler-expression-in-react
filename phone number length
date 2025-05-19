@@ -1,0 +1,51 @@
+import React from 'react'
+
+export default class Matching extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      phone: '',
+      message: '',
+    };
+  }
+
+  handlephone = (e) => {
+    this.setState({ phone: e.target.value });
+  };
+
+
+  check = (e) => {
+    const { phone } = this.state;
+    if ((phone.trim().length === 10)) {
+      this.setState({ message: '✅ Valid phone number' });
+      console.log("valid phone number");
+    }
+    else {
+      this.setState({ message: '❌ please enter 10 digit,Invlid phone number' });
+      console.log("Invalid ,enter properly");
+    }
+  };
+
+  render() {
+    return (
+      <>
+        <form onSubmit={(e) => e.preventDefault()}>
+          <h1>Phone number should be in 10 digit</h1>
+          <h4>please do not enter less than 10 digit </h4>
+
+          Enter password : <input
+            type='phone'
+            name='phone'
+            value={this.state.phone}
+            onChange={this.handlephone}
+          />
+
+        </form>
+        <br />
+        <button onClick={this.check}>check</button>
+        <p>{this.state.message}</p>
+      </>
+
+    )
+  };
+};
