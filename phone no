@@ -1,0 +1,51 @@
+# reguler-expression-in-react
+
+import React, { useState } from 'react'
+
+function Phoneno() {
+    const [phnno, setPhnno] = useState('');
+    const [msg, setMsg] = useState('');
+    const [isValid, setIsValid] = useState(null);
+
+    function handlephnno(e) {
+        setPhnno(e.target.value);
+    }
+    function validornot(e) {
+        const regex = /^\d{3}-\d{2}-\d{5}$/;
+
+        if (regex.test(phnno)) {
+            setMsg("Valid phone number✅");
+            setIsValid(true);
+            console.log("Valid phone number✅");
+        } else {
+            setMsg(" Invalid❌ ,write! phone number again");
+            setIsValid(false);
+            console.log(" Invalid❌ ,write! phone number again");
+        }
+
+    }
+    return (
+        <div>
+            <h3>Enter phone number</h3>
+            <h2> LIke this = 000-00-00000</h2>
+            <form onSubmit={(e) => e.preventDefault()}>
+
+
+                <input
+                    type='text'
+                    name='phone'
+                    placeholder="000-00-00000"
+                    value={phnno}
+                    onChange={handlephnno}
+                />
+
+            </form>
+            <br />
+            <button onClick={validornot}>check</button>
+            {/* <p>{msg}</p> */}
+            <p style={{ color: isValid === null ? 'black' : isValid ? 'green' : 'red' }}>{msg}</p>
+        </div>
+    )
+}
+
+export default Phoneno
